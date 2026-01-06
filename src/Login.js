@@ -21,7 +21,7 @@ function Login() {
       const data = await response.json();
       alert(data.message);
       if (response.ok) {
-        navigate('/users');
+        navigate('/');
       }
     } catch (err) {
       alert('Error: ' + err.message);

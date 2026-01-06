@@ -20,13 +20,13 @@ function Users() {
 
   return (
     <div className="users-container">
-      <h2>Registered Users</h2>
+      <h2>Registered Learners</h2>
       <ul>
         {users.map(user => (
           <li key={user.id}>{user.name} - {user.email}</li>
         ))}
       </ul>
-      <a href="/login">Back to Login</a>
+      <a href="/">Back to Home</a>
     </div>
   );
 }

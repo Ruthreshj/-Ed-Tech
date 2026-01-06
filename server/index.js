@@ -13,7 +13,8 @@ app.use(bodyParser.json());
 
 // MySQL connection
 const dbConfig = {
-  host: 'localhost 3306',
+  host: 'localhost',
+  port: 3306,
   user: 'root',
   password: 'Swathipapa@05' // Change if you have a password
 };
