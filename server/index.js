@@ -16,7 +16,7 @@ const dbConfig = {
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: 'Swathipapa@05' // Change if you have a password
+  password: 'Swathipapa@05' 
 };
 
 let db;
@@ -90,6 +90,6 @@ app.get('/users', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });

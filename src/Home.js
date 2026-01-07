@@ -1,15 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
 function Home() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+  };
   return (
     <div className="home-page">
       <nav className="navbar">
-        <div className="logo">Ed-Tech Platform</div>
+        <div className="nav-container">
+          <div className="logo">Ed-Tech Platform</div>
         <div className="nav-links">
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
+          {user ? (
+            <div className="user-menu">
+              <span className="user-info">
+                <span className="profile-icon">👤</span>
+                {user.name}
+              </span>
+              <button onClick={handleLogout} className="logout-btn">Logout</button>
+            </div>
+          ) : (
+            <>
+              <Link to="/">Signup</Link>
+              <Link to="/login" className="login-link">
+                <span className="profile-icon">👤</span>
+                Login
+              </Link>
+            </>
+          )}
+        </div>
         </div>
       </nav>
       <section className="hero">
@@ -17,7 +47,7 @@ function Home() {
           <h1>Empower Your Learning Journey</h1>
           <p>Discover a world of knowledge with our comprehensive courses, interactive lessons, and expert instructors. Join thousands of learners today!</p>
           <div className="hero-buttons">
-            <Link to="/signup">
+            <Link to="/">
               <button className="btn-primary">Get Started</button>
             </Link>
             <Link to="/login">
@@ -79,8 +109,8 @@ function Home() {
         <div className="container">
           <h2>Ready to Start Learning?</h2>
           <p>Join thousands of students already learning on our platform.</p>
-          <Link to="/signup">
-            <button className="btn-primary">Sign Up Now</button>
+          <Link to="/">
+            <button className="btn-primary">Explore More</button>
           </Link>
         </div>
       </section>

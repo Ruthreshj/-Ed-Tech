@@ -21,7 +21,9 @@ function Login() {
       const data = await response.json();
       alert(data.message);
       if (response.ok) {
-        navigate('/');
+        // Store user data in localStorage
+        localStorage.setItem('user', JSON.stringify(data.user || { name: formData.email.split('@')[0] }));
+        navigate('/home');
       }
     } catch (err) {
       alert('Error: ' + err.message);
@@ -36,7 +38,7 @@ function Login() {
         <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
         <button type="submit">Login</button>
       </form>
-      <p>Don't have an account? <a href="/signup">Signup</a></p>
+      <p>Don't have an account? <a href="/">Signup</a></p>
     </div>
   );
 }
