@@ -4,6 +4,12 @@ import './Home.css';
 
 function Home() {
   const [user, setUser] = useState(null);
+  const [showProfileSidebar, setShowProfileSidebar] = useState(false);
+  const [courses, setCourses] = useState([
+    { id: 1, title: 'Web Development', progress: 65, status: 'In Progress' },
+    { id: 2, title: 'Data Science', progress: 40, status: 'In Progress' },
+    { id: 3, title: 'Digital Marketing', progress: 85, status: 'In Progress' }
+  ]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -16,6 +22,11 @@ function Home() {
     localStorage.removeItem('user');
     setUser(null);
   };
+
+  const toggleProfileSidebar = () => {
+    setShowProfileSidebar(!showProfileSidebar);
+  };
+
   return (
     <div className="home-page">
       <nav className="navbar">
@@ -24,10 +35,13 @@ function Home() {
         <div className="nav-links">
           {user ? (
             <div className="user-menu">
-              <span className="user-info">
+              <button 
+                onClick={toggleProfileSidebar}
+                className="user-info-btn"
+              >
                 <span className="profile-icon">👤</span>
                 {user.name}
-              </span>
+              </button>
               <button onClick={handleLogout} className="logout-btn">Logout</button>
             </div>
           ) : (
@@ -42,6 +56,62 @@ function Home() {
         </div>
         </div>
       </nav>
+      
+      {/* Profile Sidebar */}
+      {user && (
+        <div className={`profile-sidebar ${showProfileSidebar ? 'open' : ''}`}>
+          <div className="sidebar-header">
+            <h2>Profile Details</h2>
+            <button 
+              className="close-btn" 
+              onClick={toggleProfileSidebar}
+            >
+              ✕
+            </button>
+          </div>
+          
+          <div className="profile-section">
+            <div className="profile-avatar">👤</div>
+            <h3>{user.name}</h3>
+            <p className="profile-email">{user.email}</p>
+          </div>
+
+          <div className="courses-section">
+            <h3>Courses In Progress</h3>
+            <div className="courses-list">
+              {courses.map(course => (
+                <div key={course.id} className="course-item">
+                  <div className="course-header">
+                    <h4>{course.title}</h4>
+                    <span className="course-status">{course.status}</span>
+                  </div>
+                  <div className="progress-bar-container">
+                    <div className="progress-bar">
+                      <div 
+                        className="progress-fill" 
+                        style={{ width: `${course.progress}%` }}
+                      ></div>
+                    </div>
+                    <span className="progress-text">{course.progress}%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="sidebar-footer">
+            <Link to="/users" className="view-all-users">View All Users</Link>
+          </div>
+        </div>
+      )}
+
+      {/* Overlay for sidebar */}
+      {showProfileSidebar && (
+        <div 
+          className="sidebar-overlay" 
+          onClick={toggleProfileSidebar}
+        ></div>
+      )}
       <section className="hero">
         <div className="hero-content">
           <h1>Empower Your Learning Journey</h1>
